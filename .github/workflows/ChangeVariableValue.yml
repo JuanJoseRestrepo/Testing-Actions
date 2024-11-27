@@ -1,0 +1,32 @@
+name: Modify JSON file and deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  modify-json:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v4
+
+    - name: Set PRIVATE_KEY environment variable
+      env:
+        PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+      run: |
+        echo "PRIVATE_KEY variable has been set"
+
+    - name: Modify the JSON file
+      env:
+        PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+      run: |
+        sed -i "s|\"private_key\": \".*\"|\"private_key\": \"$PRIVATE_KEY\"|" main/dev-fairness-f7145810bc87.json
+
+    - name: Show modified file
+      run: |
+        cat main/dev-fairness-f7145810bc87.json
+
+
