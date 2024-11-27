@@ -17,20 +17,22 @@ jobs:
       run: |
          ls -R
 
-    - name: Set PRIVATE_KEY environment variable
+    - name: Set PRIVATE_KEY and PRIVATE_KEY_ID environment variables
       env:
         PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+        PRIVATE_KEY_ID: ${{ secrets.PRIVATE_KEY_ID }}
       run: |
-        echo "PRIVATE_KEY variable has been set"
+        echo "PRIVATE_KEY and PRIVATE_KEY_ID variables have been set"
 
     - name: Modify the JSON file
       env:
         PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+        PRIVATE_KEY_ID: ${{ secrets.PRIVATE_KEY_ID }}
       run: |
+        # Modificar el archivo JSON para actualizar private_key y private_key_id
         sed -i "s|\"private_key\": \".*\"|\"private_key\": \"$PRIVATE_KEY\"|" main/dev-fairness-f7145810bc87.json
+        sed -i "s|\"private_key_id\": \".*\"|\"private_key_id\": \"$PRIVATE_KEY_ID\"|" main/dev-fairness-f7145810bc87.json
 
     - name: Show modified file
       run: |
         cat main/dev-fairness-f7145810bc87.json
-
-
