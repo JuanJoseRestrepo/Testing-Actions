@@ -13,6 +13,10 @@ jobs:
     - name: Checkout the repository
       uses: actions/checkout@v4
 
+    - name: Check out the things
+      run: |
+         ls -R
+
     - name: Set PRIVATE_KEY environment variable
       env:
         PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
